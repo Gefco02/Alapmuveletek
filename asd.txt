@@ -1,8 +1,8 @@
 Alampműveletek gyakoroltatása statisztika: 
-   Össz kérdések száma: 1   Össz próbálkozások száma: 1
+   Össz kérdések száma: 6   Össz próbálkozások száma: 2
    Összeadás: 0   Összeadás: 0
    Kivonás: 0   Kivonás: 0
-   Osztás: 1   Osztás: 1
+   Osztás: 6   Osztás: 2
    Szorzás: 0   Szorzás: 0
 
- Eredményed: 100.0
+ Eredményed nem kiszámolható

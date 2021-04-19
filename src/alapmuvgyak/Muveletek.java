@@ -496,6 +496,7 @@ public class Muveletek extends javax.swing.JFrame {
         lblValasz.setText("Visszajelzés");
         txtEredmeny.setText("");
         osztas();
+        btnUj.setEnabled(false);
     }//GEN-LAST:event_mnuMuveletOsztasActionPerformed
 
     private void btnEllenorzesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEllenorzesActionPerformed
@@ -507,6 +508,7 @@ public class Muveletek extends javax.swing.JFrame {
                 if (szam1 / szam2 == valasz) {
                     lblValasz.setText("A megoldásod helyes!");
                     btnEllenorzes.setEnabled(false);
+                    btnUj.setEnabled(true);
                     
                 } else {
                     lblValasz.setText("A megoldásod helytelen!");
@@ -521,6 +523,7 @@ public class Muveletek extends javax.swing.JFrame {
                 if (szam1 - szam2 == valasz) {
                     lblValasz.setText("A megoldásod helyes!");
                     btnEllenorzes.setEnabled(false);
+                    btnUj.setEnabled(true);
                 } else {
                     lblValasz.setText("A megoldásod helytelen!");
                 }
@@ -534,6 +537,7 @@ public class Muveletek extends javax.swing.JFrame {
                 if (szam1 * szam2 == valasz) {
                     lblValasz.setText("A megoldásod helyes!");
                     btnEllenorzes.setEnabled(false);
+                    btnUj.setEnabled(true);
                 } else {
                     lblValasz.setText("A megoldásod helytelen!");
                 }
@@ -547,6 +551,7 @@ public class Muveletek extends javax.swing.JFrame {
                 if (szam1 + szam2 == valasz) {
                     lblValasz.setText("A megoldásod helyes!");
                     btnEllenorzes.setEnabled(false);
+                    btnUj.setEnabled(true);
                 } else {
                     lblValasz.setText("A megoldásod helytelen!");
                 }
@@ -554,8 +559,11 @@ public class Muveletek extends javax.swing.JFrame {
                 lblValasz.setText("Adj meg szám értéket!");
             }
         }
+        if((double)osszKerdes/(double)osszProba*100<=100){
+            eredmeny=((double)osszKerdes/(double)osszProba)*100;
         
-        eredmeny=((double)osszKerdes/(double)osszProba)*100;
+        }else{eredmeny=0;}
+        
         lblOsszKerdes.setText("Össz kérdések száma: "+osszKerdes);
         lblOsszProba.setText("Össz próbálkozások száma: "+osszProba);
         lblEredmeny.setText("Eredményed: "+eredmeny+"%");
@@ -588,6 +596,7 @@ public class Muveletek extends javax.swing.JFrame {
         }
         txtEredmeny.setText("");
         btnEllenorzes.setEnabled(true);
+        btnUj.setEnabled(false);
         osszKerdes++;
     }//GEN-LAST:event_btnUjActionPerformed
 
@@ -599,6 +608,7 @@ public class Muveletek extends javax.swing.JFrame {
         muvelet = 2;
         kivonas();
         osszKerdes++;
+        btnUj.setEnabled(false);
     }//GEN-LAST:event_mnuMuveletKivonasActionPerformed
 
     private void mnuMuveletOsszeadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMuveletOsszeadasActionPerformed
@@ -609,6 +619,7 @@ public class Muveletek extends javax.swing.JFrame {
         muvelet = 4;
         osszeadas();
         osszKerdes++;
+        btnUj.setEnabled(false);
     }//GEN-LAST:event_mnuMuveletOsszeadasActionPerformed
 
     private void mnuMuveletSzorzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMuveletSzorzasActionPerformed
@@ -619,6 +630,7 @@ public class Muveletek extends javax.swing.JFrame {
         muvelet = 3;
         szorzas();
         osszKerdes++;
+        btnUj.setEnabled(false);
     }//GEN-LAST:event_mnuMuveletSzorzasActionPerformed
 
     /**
@@ -711,8 +723,8 @@ String statisztika = "Alampműveletek gyakoroltatása statisztika: \n";
             String formazo = "%"+ (kerdesMaxHossz+HE) + "s%" + (probaMaxHossz+HE) +"s\n";
             statisztika += String.format(formazo, labKerdes.getText(), labProba.getText());
         }
-
-        statisztika+="\n Eredményed: "+eredmeny+"%";
+        if(eredmeny>0){ statisztika+="\n Eredményed: "+eredmeny+"%";}
+        else{statisztika+="\n Eredményed nem kiszámolható";}
         return statisztika;  
     }
 
