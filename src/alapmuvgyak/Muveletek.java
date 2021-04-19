@@ -191,7 +191,7 @@ public class Muveletek extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        mnuFajl.setText("Fájl");
+        mnuFajl.setText("Fájl1");
 
         mnuFajlMegnyit.setText("Megnyit");
         mnuFajl.add(mnuFajlMegnyit);
