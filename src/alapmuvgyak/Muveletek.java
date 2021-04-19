@@ -712,7 +712,7 @@ String statisztika = "Alampműveletek gyakoroltatása statisztika: \n";
             statisztika += String.format(formazo, labKerdes.getText(), labProba.getText());
         }
 
-
+        statisztika+="\n Eredményed: "+eredmeny+"%";
         return statisztika;  
     }
 
