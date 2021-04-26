@@ -329,13 +329,13 @@
         <Component class="javax.swing.JLabel" name="lblOsszKerdes">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="&#xd6;ssz k&#xe9;rd&#xe9;sek sz&#xe1;ma: 1"/>
+            <Property name="text" type="java.lang.String" value="&#xd6;ssz k&#xe9;rd&#xe9;sek sz&#xe1;ma: 0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblOsszProba">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="&#xd6;ssz Prob&#xe1;lkoz&#xe1;sok sz&#xe1;ma: 1"/>
+            <Property name="text" type="java.lang.String" value="&#xd6;ssz Prob&#xe1;lkoz&#xe1;sok sz&#xe1;ma: 0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblEredmeny">

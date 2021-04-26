@@ -7,6 +7,7 @@ import static java.lang.Math.random;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -149,10 +150,10 @@ public class Muveletek extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Statisztika"));
 
         lblOsszKerdes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblOsszKerdes.setText("Össz kérdések száma: 1");
+        lblOsszKerdes.setText("Össz kérdések száma: 0");
 
         lblOsszProba.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblOsszProba.setText("Össz Probálkozások száma: 1");
+        lblOsszProba.setText("Össz Probálkozások száma: 0");
 
         lblEredmeny.setText("Eredmény: 0 %");
 
@@ -464,24 +465,99 @@ public class Muveletek extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuFajlMentMaskentActionPerformed
 
     private void mnuFajlMegnyitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFajlMegnyitActionPerformed
-        JFileChooser fc = new JFileChooser();
+/* fájl helyének és nevének megnyitása */
+        JFileChooser fc = new JFileChooser(new File("."));
         fc.setDialogTitle("Megnyitás!");
+
         FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("PNG és GIF képek", "png", "gif");
         fc.addChoosableFileFilter(imgFilter);
-        
+
         FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("csak szöveg (*.txt)", "txt");
         fc.addChoosableFileFilter(txtFilter);
-        
+
         FileNameExtensionFilter kkFilter = new FileNameExtensionFilter("speciális (*.kk)", "kk");
         fc.addChoosableFileFilter(kkFilter);
 
-        
-        int kivalaszt = fc.showSaveDialog(this);
-        File f = fc.getSelectedFile();
-        int megnyit = JOptionPane.showConfirmDialog(this, "Biztos meg akarod nyitni?", "Visszajelzés", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if(megnyit == JOptionPane.YES_OPTION){
-            lblEredmeny.setText("<html>Elérés: " + f.getPath() + "<br>Könyvtár: " + f.getName() + "</html>"); 
-        }else{
+        fc.setFileFilter(txtFilter);
+
+        int valasztas = fc.showOpenDialog(this);
+        if (valasztas == JFileChooser.APPROVE_OPTION) {
+            File f = fc.getSelectedFile();
+            String fn = f.getPath();
+//            lblEredmeny.setText("<html>Elérés: " + fn + "<br>Könyvtár: " + f.getName() + "</html>");
+
+            Path path = Paths.get(fn);
+            try {
+                byte[] bajtTomb = Files.readAllBytes(path);//betűnként ASCCI kód
+                byte egyBajt = bajtTomb[0]; 
+                
+                
+                int[]szamok = {osszKerdes,osszProba,osszeadKerdes,osszeadProba,kivonasKerdes,kivonasProba,osztasKerdes,osztasProba,szorzasKerdes,szorzasProba};
+                int listIndex=0;
+                List<String> stringLista = Files.readAllLines(path);
+                for (int i = 1; i < 6; i++) {
+                    String Sor = stringLista.get(i);
+                    String[] adatok = Sor.split(": ");
+                    String[] sorkoz = adatok[1].split("   ");
+                    szamok[listIndex]=Integer.valueOf(sorkoz[0]);
+                    szamok[listIndex+1]=Integer.valueOf(adatok[2]);
+                    if(i<5){
+                    listIndex+=2;}
+                    
+                }
+                
+                
+                
+                
+//                String elsoSor = stringLista.get(1);
+//                String masodikSor = stringLista.get(2);
+//                String harmadikSor = stringLista.get(3);
+//                String negyedikSor = stringLista.get(4);
+//                String otodikSor = stringLista.get(5);
+                  String hetedikSor = stringLista.get(7);
+//
+//                //első sor
+//                String[] adatok = elsoSor.split(": ");
+//                String[] sorkoz = adatok[1].split("   ");
+//                osszKerdes = Integer.valueOf(sorkoz[0]);
+//                osszProba = Integer.valueOf(adatok[2]);
+//                
+//                //második sor
+//                String[] adatok2 = masodikSor.split(": ");
+//                String[] sorkoz2 = adatok2[1].split("   ");
+//                osszeadKerdes = Integer.valueOf(sorkoz2[0]);
+//                osszeadProba = Integer.valueOf(adatok2[2]);
+//                
+//                //harmadik sor
+//                String[] adatok3 = harmadikSor.split(": ");
+//                String[] sorkoz3 = adatok3[1].split("   ");
+//                kivonasKerdes = Integer.valueOf(sorkoz3[0]);
+//                kivonasProba = Integer.valueOf(adatok3[2]);
+//                
+//                //negyedik sor
+//                String[] adatok4 = negyedikSor.split(": ");
+//                String[] sorkoz4 = adatok4[1].split("   ");
+//                osztasKerdes = Integer.valueOf(sorkoz4[0]);
+//                osztasProba = Integer.valueOf(adatok4[2]);
+//                
+//                //ötödik sor
+//                String[] adatok5 = otodikSor.split(": ");
+//                String[] sorkoz5 = adatok5[1].split("   ");
+//                szorzasKerdes = Integer.valueOf(sorkoz5[0]);
+//                szorzasProba = Integer.valueOf(adatok5[2]);
+                                
+                //hetedik
+                String[] adatok7 = hetedikSor.split(": ");
+                String[] sorkoz7 = adatok7[1].split(" ");
+                eredmeny = Double.valueOf(sorkoz7[0]);
+                kiiratás();
+                
+
+                /* tényleges megnyitás VÉGE */         
+            } catch (IOException ex) {
+                Logger.getLogger(Muveletek.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             JOptionPane.showMessageDialog(this, "Megnyitás megszakítva", "Nincs megnyitás", JOptionPane.INFORMATION_MESSAGE);
         }
         
@@ -563,18 +639,8 @@ public class Muveletek extends javax.swing.JFrame {
             eredmeny=((double)osszKerdes/(double)osszProba)*100;
         
         }else{eredmeny=0;}
-        
-        lblOsszKerdes.setText("Össz kérdések száma: "+osszKerdes);
-        lblOsszProba.setText("Össz próbálkozások száma: "+osszProba);
-        lblEredmeny.setText("Eredményed: "+eredmeny+"%");
-        lblOsztasKerdes.setText("Osztás: "+osztasKerdes);
-        lblOsztasProba.setText("Osztás: "+osztasProba);
-        lblOsszeadKerdes.setText("Összeadás: "+osszeadKerdes);
-        lblOsszeadProba.setText("Összeadás: "+osszeadProba);
-        lblSzorzasKerdes.setText("Szorzás: "+szorzasKerdes);
-        lblSzorzasProba.setText("Szorzás: "+szorzasProba);
-        lblKivonasKerdes.setText("Kivonás: "+kivonasKerdes);
-        lblKivonasProba.setText("Kivonás: "+kivonasProba);
+        kiiratás();
+
         
         System.out.println(eredmeny);
     }//GEN-LAST:event_btnEllenorzesActionPerformed
@@ -723,7 +789,7 @@ String statisztika = "Alampműveletek gyakoroltatása statisztika: \n";
             String formazo = "%"+ (kerdesMaxHossz+HE) + "s%" + (probaMaxHossz+HE) +"s\n";
             statisztika += String.format(formazo, labKerdes.getText(), labProba.getText());
         }
-        if(eredmeny>0){ statisztika+="\n Eredményed: "+eredmeny+"%";}
+        if(eredmeny>0){ statisztika+="\n Eredményed: "+eredmeny+" %";}
         else{statisztika+="\n Eredményed nem kiszámolható";}
         return statisztika;  
     }
@@ -760,5 +826,19 @@ String statisztika = "Alampműveletek gyakoroltatása statisztika: \n";
         szam1 = random.nextInt(100) + 1;
         szam2 = random.nextInt(100) + 1;
         lblFeladat.setText(szam1 + "+" + szam2 + "=");
+    }
+
+    private void kiiratás() {
+        lblOsszKerdes.setText("Össz kérdések száma: "+osszKerdes);
+        lblOsszProba.setText("Össz próbálkozások száma: "+osszProba);
+        lblEredmeny.setText("Eredményed: "+eredmeny+"%");
+        lblOsztasKerdes.setText("Osztás: "+osztasKerdes);
+        lblOsztasProba.setText("Osztás: "+osztasProba);
+        lblOsszeadKerdes.setText("Összeadás: "+osszeadKerdes);
+        lblOsszeadProba.setText("Összeadás: "+osszeadProba);
+        lblSzorzasKerdes.setText("Szorzás: "+szorzasKerdes);
+        lblSzorzasProba.setText("Szorzás: "+szorzasProba);
+        lblKivonasKerdes.setText("Kivonás: "+kivonasKerdes);
+        lblKivonasProba.setText("Kivonás: "+kivonasProba);
     }
 }
